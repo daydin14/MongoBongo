@@ -8,14 +8,19 @@
 			<a href="http://grevera.ddns.net/~da660655/add142412.php">Add Subject</a>
 		<br>
 		<?php
+		if(isset($_GET['USUBJID'])){
+                        $usubjid =$_GET['USUBJID'];
+                        $filter = (int)$usubjid;
+
 			$m = new MongoDB\Driver\Manager("mongodb://da660655:706403@localhost:27017/da660655");
 
-   			$listsubject = new MongoDB\Driver\Query([]);
+   			$listsubject = new MongoDB\Driver\Query(['USUBJID'=>$filter]);
 
-            $rows = $m->executeQuery("da660655.DM", $listsubject);
+            		$rows = $m->executeQuery("da660655.DM", $listsubject);
 
+			echo '<a href="study889001.php">Back to all Subjects</a><br>';
 
-            foreach($rows as $r1){
+            		foreach($rows as $r1){
                                 echo "\n";
                                 $subjectid = $r1->USUBJID;
                                 echo $r1->STUDYID;
@@ -33,13 +38,11 @@
                                 echo $r1->COUNTRY;
                                 echo '<br>';
                                 echo '<br>';
+				echo '<a href="visit346500.php">Subject Visits</a><br/>';
+				echo '<a href="comment795316.php">Subject Comments </a></br>';
+
                         }
-            if(isset($_POST['USUBJID']))
-            {
-            	$subjectid = $_POST['USUBJID'];
-            	$filter = (int)$subjectid;
-            	echo $filter;
-            }
+		}
 		?>
 	</body>
 </html>

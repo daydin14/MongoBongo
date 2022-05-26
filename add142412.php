@@ -1,3 +1,4 @@
+
 <html>
 <head> <title> Add Subject </title> </head>
 <body> <pre>
@@ -24,7 +25,6 @@
                 <td><input type="text" name="country"></td>
             </tr>
             <tr>
-                <td><input type="hidden" name="subjectID" value=""></td>
                 <td><input type="submit" name="Submit" value="Add"></td>
             </tr>
         </table>
@@ -46,22 +46,25 @@
             $m = new MongoDB\Driver\Manager("mongodb://da660655:706403@localhost:27017/da660655");
 
             $usubjid =getDM($m);
-            $filter =(int)$usubjid;
-            echo $filter;
+            $filter = (int)$usubjid;
+            echo "$filter\n";
 
 
-            $demographics = array([
+            $demographics = array(
                     'STUDYID'   => '12700',
                     'DOMAIN'   => 'DM',
                     'USUBJID'    => $filter,
                     'BRTHDTC'  => $_POST['dob'],
                     'SEX'            => $_POST['sex'],
                     'RACE'         => $_POST['race'],
-                    'COUNTRY' => $_POST['country'] ]);
+                    'COUNTRY' => $_POST['country']);
 
             $bulk = new MongoDB\Driver\BulkWrite();
-            $bulk-> insert($demographics);
+            $bulk->insert($demographics);
             $m->executeBulkWrite("da660655.DM", $bulk);
+
+	    echo "Subject Added\n";
+
         }
     ?>
 
